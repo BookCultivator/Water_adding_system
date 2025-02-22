@@ -2,7 +2,7 @@ import requests
 
 
 # 取得天氣資訊
-def Seach_weather(city):
+def Search_weather(city):
     url = "https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWA-58ACE3D3-C4F6-4272-862C-DFD7219B46D1&format=JSON"
     data = requests.get(url).json() # 將網頁資料GET下來
     location = data["records"]["location"] # 取得location資料
@@ -28,6 +28,6 @@ def Seach_weather(city):
     print("=====================================")
 
 
-Seach_weather("臺北市")
-Seach_weather("臺南市")
+Search_weather("臺北市")
+Search_weather("臺南市")
 
