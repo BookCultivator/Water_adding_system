@@ -4,9 +4,29 @@ url = "https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorizati
 
 data = requests.get(url).json() # 將網頁資料GET下來
 localtion = data["records"]["location"] # 取得location資料
-for i in localtion:
-    if i['locationName'] == "臺北市":
-        for j in i['weatherElement']:
-            if j['elementName'] == "Wx":
-                print("weather : {}".format(j['time'][0]['parameter']['parameterName']))
+
+def Seach_weather(city):
+    print("城市 : {}".format(city))
+    for i in localtion:
+        if i['locationName'] == city:
+            for j in i['weatherElement']:
+                if j['elementName'] == "Wx":
+                    print("天氣狀況 : {}".format(j['time'][0]['parameter']['parameterName']))
+            for j in i['weatherElement']:
+                if j['elementName'] == "MaxT":
+                    print("最高溫度 : {}".format(j['time'][0]['parameter']['parameterName']), "°C")
+            for j in i['weatherElement']:
+                if j['elementName'] == "MinT":
+                    print("最低溫度 : {}".format(j['time'][0]['parameter']['parameterName']), "°C")
+            for j in i['weatherElement']:
+                if j['elementName'] == "CI":
+                    print("舒適度   : {}".format(j['time'][0]['parameter']['parameterName']))
+            for j in i['weatherElement']:
+                if j['elementName'] == "PoP":
+                    print("降雨機率 : {}".format(j['time'][0]['parameter']['parameterName']), "%")
+    print("=====================================")
+
+
+Seach_weather("臺北市")
+Seach_weather("臺南市")
 
