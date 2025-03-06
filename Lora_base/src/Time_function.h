@@ -17,7 +17,7 @@ void Time_init() {
     Serial.println("時間同步成功！");
 }
 
-struct time_{
+struct time_ {
     int hour;
     int minute;
     int year;
@@ -25,16 +25,18 @@ struct time_{
     int day;
 };
 
-void time_data(struct time_) {
+void time_data(struct time_ *ntime) {
+    configTime(gmtOffest, daylightOffset, ntpServer);
+    Serial.println("NTP 時間同步中...");
     struct tm timeinfo;
     while (!getLocalTime(&timeinfo)) {
         Serial.println("獲取時間失敗");
         return;
     }
-    time_ ntime;
-    ntime.hour = timeinfo.tm_hour; 
-    ntime.minute = timeinfo.tm_min;
-    ntime.year = timeinfo.tm_year + 1900;
-    ntime.mon = timeinfo.tm_mon + 1;
-    ntime.day = timeinfo.tm_mday;
+    
+    ntime->hour = timeinfo.tm_hour; 
+    ntime->minute = timeinfo.tm_min;
+    ntime->year = timeinfo.tm_year + 1900;
+    ntime->mon = timeinfo.tm_mon + 1;
+    ntime->day = timeinfo.tm_mday;
 }
