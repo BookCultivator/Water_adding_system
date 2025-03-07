@@ -20,7 +20,7 @@ struct send_data {
 
 void Lora_init(int BAND, int NSS, int RST, int DIO0, int SF, int SBW, int CR);
 void Lora_send(String message);
-void Lora_readData(char type, struct read_data *data_out);
+void Lora_GetData(char type, struct read_data *data_out);
 void Lora_sendData(char type, struct send_data *data_in);
 
 void Lora_init(int BAND, int NSS, int RST, int DIO0, int SF, int SBW, int CR) {
@@ -63,7 +63,7 @@ void Lora_sendData(char type, struct send_data *data_in) {
     }
 }
 
-void Lroa_readData(char type, struct read_data *data_out) {
+void Lroa_GetData(char type, String deviceID, struct read_data *data_out) {
     if (type == 'int') {     //讀取數值資料
         int intData;
         LoRa.readBytes((uint8_t *) &intData, sizeof(intData));
