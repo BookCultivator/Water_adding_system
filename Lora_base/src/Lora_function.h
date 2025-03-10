@@ -4,7 +4,7 @@
 #include <ArduinoJson.h>
 #include <vector>
 
-struct read_data {
+struct get_data {
     int intData;
     float floatData;
     String stringData;
@@ -20,8 +20,8 @@ struct send_data {
 
 void Lora_init(int BAND, int NSS, int RST, int DIO0, int SF, int SBW, int CR);
 void Lora_send(String message);
-void Lora_GetData(char type, struct read_data *data_out);
-void Lora_sendData(char type, struct send_data *data_in);
+void Lora_SendData(char type, String deviceID, struct send_data *data_in);
+void Lroa_GetData(char type, String deviceID, struct read_data *data_out);
 
 void Lora_init(int BAND, int NSS, int RST, int DIO0, int SF, int SBW, int CR) {
     LoRa.setPins(NSS, RST, DIO0);  //設定LoRa模組的腳位
@@ -36,57 +36,84 @@ void Lora_init(int BAND, int NSS, int RST, int DIO0, int SF, int SBW, int CR) {
     Serial.println("LoRa init parameters set.");
 }
 
-void Lora_sendData(char type, struct send_data *data_in) {
-    if (type == 'int') {
+void Lora_SendData(char type, String deviceID, struct send_data *data_in) {
+    if (deviceID == NULL) {
+        deviceID = "ALL";
+    }
+    if (type == 'int') {    //發送數值資料(無ID指定) =>ALL
         LoRa.beginPacket();
         LoRa.write((uint8_t *) &data_in->intData, sizeof(data_in->intData));
         LoRa.endPacket();
         Serial.println("Date sent.");
+        return;
     }
-    else if (type == 'float') {
+    else if (type == 'float') {    //發送浮點數資料(無ID指定) =>ALL
         LoRa.beginPacket();
         LoRa.write((uint8_t *) &data_in->floatData, sizeof(data_in->floatData));
         LoRa.endPacket();
         Serial.println("Date sent.");
+        return;
     }
-    else if (type == 'String') {
+    else if (type == 'String') {   //發送字串資料
         LoRa.beginPacket();
-        LoRa.print(data_in->stringData);
+        LoRa.print(deviceID + ":" + data_in->stringData);
         LoRa.endPacket();
         Serial.println("Date sent.");
+        return;
     }
-    else if (type == 'json') {
+    else if (type == 'json') {     //發送json資料
         LoRa.beginPacket();
-        LoRa.print(data_in->jsonData);
+        LoRa.print(deviceID + ":" + data_in->jsonData);
         LoRa.endPacket();
         Serial.println("Date sent.");
+        return;
+    }
+    else {
+        Serial.println("Type error.");  //類型錯誤
     }
 }
 
-void Lroa_GetData(char type, String deviceID, struct read_data *data_out) {
+void Lroa_GetData(char type, String deviceID, struct get_data *data_out) {
     if (type == 'int') {     //讀取數值資料
         int intData;
         LoRa.readBytes((uint8_t *) &intData, sizeof(intData));
         Serial.println(intData);
         data_out->intData = intData;            //將資料存入data_out
+        return;
     }
     else if (type == 'float') {
         float floatData;
         LoRa.readBytes((uint8_t *) &floatData, sizeof(floatData));
         Serial.println(floatData);
         data_out->floatData = floatData;        //將資料存入data_out
+        return;
     }
     
     else if (type == 'String') {
         String strdata = LoRa.readString();     //讀取字串資料
         Serial.println(strdata);
+        int splitIndex = strdata.indexOf(':');
+        if (splitIndex != -1) {
+            String get_ID = strdata.substring(0, splitIndex);
+            String data = strdata.substring(splitIndex + 1);
+            if (get_ID == deviceID || get_ID == "ALL") {
+                strdata = data;
+            }
+        }
+        else {
+            Serial.println("Data error.");
+        }
         data_out->stringData = strdata;         //將資料存入data_out
+        return;
     }
     else if (type == 'json') {
         String jsondata = LoRa.readString();    //讀取json資料
         Serial.println("response: ");
         Serial.println(jsondata);
-        deserializeJson(data_out->jsonData, jsondata);  //解析json資料
+        StaticJsonDocument<256> doc;
+        deserializeJson(doc, jsondata);  //解析json資料
+        String get_ID = doc["sensor"];
+        return;
     }
     else {
         Serial.println("Type error.");  //類型錯誤
