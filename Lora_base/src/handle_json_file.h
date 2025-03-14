@@ -91,7 +91,6 @@ void GetServerJsonToFile(const char *filename, const char *url, StaticJsonDocume
         http.end();
     }
     else {
-        Serial.println("WiFi Disconnected");
+        Serial.println("WiFi Disconnected or server error");  // WiFi未連線或伺服器錯誤
     }
 }
-
