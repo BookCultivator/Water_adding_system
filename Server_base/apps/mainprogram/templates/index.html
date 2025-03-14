@@ -4,8 +4,47 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Flask Home</title>
+        <style>
+            .test {
+                background-color: aqua;
+                border: 2px solid #007BFF;
+                box-sizing: content-box;
+                border-radius: 10px;
+                font-size: 2rem;
+                color: #007BFF;
+            }
+            p {
+                margin: 0;
+                text-align: center;
+                padding: 10px;
+            }
+            .test_bu {
+                background-color: #007BFF;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+                border-radius: 5px;
+                position: absolute;
+            }
+        </style>
+        <script>
+            function test() {
+                console.log('test');
+            }
+        </script>
     </head>
     <body>
-        <h1>Welcome {{name}}</h1>
+        <h3>Welcome {{name}}</h3>
+        <div class="test"> 
+            <p>Test</p>
+            <button class="test_bu" type="button" onclick="test()">Temperature</button>
+        </div>
+        
     </body>
 </html>
