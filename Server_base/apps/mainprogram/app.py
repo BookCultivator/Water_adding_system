@@ -3,9 +3,31 @@ import random
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET"]) # 設定路由
+@app.route("/", methods = ["GET"]) # 設定路由
 def test():
-    return "Hello World"
+    return "Hello. This page is nothing."
+
+@app.route("/interface/web_extremity", methods = ["GET"])
+def index():
+    return "Hi"
+
+@app.route("/interface/phone_extremity", methods = ["GET"])
+def index():
+    return "Hi"
+
+@app.route("/bot/line_bot", methods = ["GET"])
+def index():
+    return "Hi"
+
+@app.route("/bot/discord_bot", methods = ["GET"])
+def index():
+    return "hi"
+
+@app.route("/data/sensor_data", methods = ["POST"])
+def index():
+    return "Hi"
+
+
 
 @app.route("/test2/<name>", methods=["GET"], endpoint="prinnNameEndpoint")
 def test2(name):
