@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <LoRa.h>
+
 #include <String.h>
 #include <ArduinoJson.h>
 #include <vector>
@@ -36,7 +37,7 @@ void Lora_init(int BAND, int NSS, int RST, int DIO0, int SF, int SBW, int CR) {
     Serial.println("LoRa init parameters set.");
 }
 
-void Lora_SendData(char type, String deviceID, struct send_data *data_in) {
+void Lora_SendData(char type, String deviceID, send_data *data_in) {
     if (deviceID == NULL) {
         deviceID = "ALL";
     }
@@ -73,7 +74,7 @@ void Lora_SendData(char type, String deviceID, struct send_data *data_in) {
     }
 }
 
-void Lroa_GetData(char type, String deviceID, struct get_data *data_out) {
+void Lroa_GetData(char type, String deviceID, get_data *data_out) {
     if (type == 'int') {     //讀取數值資料
         int intData;
         LoRa.readBytes((uint8_t *) &intData, sizeof(intData));
