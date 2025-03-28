@@ -8,9 +8,44 @@
 int *_M0, *_M1, *_AUX, *_RST, *_RTD, *_TXD;
 LoRa_E220 e220_obj(&Serial2,*_AUX, *_M0, *_M1);
 
+class changeConfig {
+	private:
+		struct Configuration *conf;
+	public:
+		void structSet(struct Configuration &conf);
+		void setConfig_ADDH(byte &in_da);
+		void setCinfig_ADDL(byte &in_da);
+		void setConfig_CHAN(int &in_da);
+		void setConfig_uartBaudRate(int &in_da);
+};
+
+void changeConfig::structSet(struct Configuration &conf) {
+	this->conf = &conf;
+}
+
+void changeConfig::setConfig_ADDH(byte &in_da) {
+	conf->ADDH = in_da;
+}
+
+void changeConfig::setCinfig_ADDL(byte &in_da) {
+	conf->ADDL = in_da;
+}
+
+void changeConfig::setConfig_CHAN(int &in_da) {
+	conf->CHAN = in_da;
+}
+
+void changeConfig::setConfig_uartBaudRate(int &in_da) {
+	conf->SPED.uartBaudRate = in_da;
+}
+
+
+
 class Lora_function {
     private:
-        byte ADDl;
+        byte ADDH;
+		byte ADDL;
+		int CHAN;
         
     public:
         void Lora_pinSet(int &M0, int &M1, int &AUX, int &RST, int &RTD, int &TXD);
@@ -20,6 +55,7 @@ class Lora_function {
         void Lora_setConfig();
         void printParameters(struct Configuration configuration);
         void printModuleInformation(struct ModuleInformation moduleInformation);
+		void Lora_changeconfigration(String &type, String &value);
         void Lora_sendData(struct send_data &data);
 };
 
@@ -94,7 +130,28 @@ void Lora_function::printModuleInformation(struct ModuleInformation moduleInform
 	Serial.println("----------------------------------------");
 }
 
+void Lora_function::Lora_changeconfigration(String &type, String &value) {
+	String *_type = &type;
+	String *_value = &value;
+	if (*_type == "ADDH") {
+		
+	}
+	
+}
+
+void Lora_function::Lora_setConfig() {
+	ResponseStructContainer c;
+	c = e220_obj.getConfiguration();
+	Configuration conf = *(Configuration *)c.data;
+	Serial.println(c.status.getResponseDescription());
+	Serial.println(c.status.code);
+	printParameters(conf);
+	conf.ADDH = ADDH;
+}
+
 void Lora_function::Lora_sendData(struct send_data &data) {
     
 }
+
+
 
