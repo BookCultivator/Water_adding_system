@@ -172,7 +172,6 @@ class Lora_function {
     public:
         void Lora_pinSet(int M0, int M1, int AUX, int RST, int RTD, int TXD);
         void Lora_Start();
-        void Lora_Restart();
         void Lora_ConfigRest();
         void Lora_SendMessaege(struct one_to_one &obj);  //發送訊息
 		void Lora_SendMessaege(struct one_to_Free &obj);  //發送訊息
