@@ -18,6 +18,7 @@ one_to_one obj;  //宣告一個one_to_one物件
 one_to_Free obj_free;  //宣告一個one_to_Free物件
 get_data obj_get;  //宣告一個get_data物件
 Lora_function lora_obj;  //宣告一個Lora_function物件
+JsonFileHandle json_obj;  //宣告一個JsonFileHandle物件
 void WiFi_connect();
 void send_address_set(String msg) {
   obj.Addh = 0x00;
@@ -45,7 +46,7 @@ void loop() {
 
 void WiFi_connect() {
   StaticJsonDocument<256> doc;
-  read_json_file("/JsonData/config.json", doc);  //讀取config.json檔案
+  json_obj.read_json_file("/JsonData/config.json", doc);  //讀取config.json檔案
   JsonArray array = doc["WiFi_Date"];  //取得WiFi資料
   WiFi_STA_connected(array[0]["ssid"], array[0]["password"]);
 } 
