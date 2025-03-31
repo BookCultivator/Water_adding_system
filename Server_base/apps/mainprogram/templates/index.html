@@ -30,24 +30,23 @@
                 margin: 4px 2px;
                 cursor: pointer;
                 border-radius: 5px;
-                position: absolute;
             }
         </style>
         <script>
             function test() {
-                console.log('test');
+                document.getElementById("temperature").innerHTML = "Hello World!";
             }
         </script>
     </head>
     <body>
         <h3>Welcome {{name}}</h3>
-        <div class="test"> 
-            <p>Test</p>
-            <button class="test_bu" type="button" onclick="test()">Temperature</button>
+        <div class="test", id="temperature"> 
+            <p>Temperature</p>
         </div>
-        <div class="test">
-            <p>Test2</p>
+        <div class="test", id="temperature">
+            <p>Humidity</p>
         </div>
+        <button class="test_bu" type="button" onclick="test()">Temperature</button>
         
     </body>
 </html>
