@@ -6,6 +6,7 @@ def Search_weather(city):
     url = "https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWA-58ACE3D3-C4F6-4272-862C-DFD7219B46D1&format=JSON"
     data = requests.get(url).json() # 將網頁資料GET下來
     location = data["records"]["location"] # 取得location資料
+    print("=====================================")
     print("城市 : {}".format(city))
     for i in location:
         if i['locationName'] == city:
