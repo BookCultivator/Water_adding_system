@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Google 地圖</title>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCd1M4mB56LoMctcxn1lZ0xE51NxxTFJvM&callback=initMap" async defer></script>
+        <script>
+            function initMap() {
+                var location = { lat: 23.14610898985506, lng: 120.21730419815454 };  // 台北 101 的經緯度
+                var map = new google.maps.Map(document.getElementById("map"), {
+                    center: location,
+                    zoom: 15
+                });
+
+                var marker = new google.maps.Marker({
+                    position: location,
+                    map: map,
+                    title: "Home"
+                });
+
+                // 定義矩形範圍（南北東西）
+                const rectangleCoords = [
+                    { lat: 23.147556556808897, lng: 120.2173174108212 },// 左上
+                    { lat: 23.147491299395853, lng: 120.21706382953656 },// 右上  
+                    { lat: 23.146580254572534, lng: 120.21715821855784 }, // 右下
+                    { lat: 23.146681440898483, lng: 120.217580056606825 } // 左下
+                ];
+
+                const rectanglePolygon = new google.maps.Polygon({
+                    paths: rectangleCoords,
+                    strokeColor: "#008000",
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: "#008000",
+                    fillOpacity: 0.35,
+                    map: map
+                });
+
+                // 點擊這個區域
+                rectanglePolygon.addListener('click', function() {
+                    alert('你點到了這個四角區域！');
+                });
+            }
+        </script>
+        <style>
+            #map {
+                height: 500px;
+                width: 100%;
+                border-radius: 10px;
+                border-color: green
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Google 地圖</h2>
+        <div id="map"></div>
+    </body>
+</html>

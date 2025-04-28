@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+    <head>
+    <meta charset="UTF-8">
+    <title>可收合選單</title>
+    <style>
+        body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        }
+
+        /* 側邊欄樣式 */
+        .sidebar {
+        width: 200px;
+        background-color: #1c2835;
+        color: white;
+        height: 100vh;
+        transition: width 0.3s;
+        overflow-x: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+        }
+
+        .sidebar.collapsed {
+        width: 50px;
+        }
+
+        /* 選單文字和連結的隱藏處理 */
+        .sidebar h2,
+        .sidebar a {
+        opacity: 1;
+        transition: opacity 0.3s;
+        white-space: nowrap;
+        margin-left: 50px;
+        }
+
+        .sidebar.collapsed h2,
+        .sidebar.collapsed a {
+        opacity: 0;
+        pointer-events: none;
+        }
+
+        .sidebar a {
+        display: block;
+        color: white;
+        padding: 10px 0;
+        text-decoration: none;
+        }
+
+        .sidebar a:hover {
+        background-color: #34495e;
+        }
+
+        /* 收合按鈕，固定在左上角 */
+        .toggle-btn {
+        position: fixed;
+        top: 20px;
+        left: 10px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        font-size: 18px;
+        z-index: 1000;
+        }
+
+        /* 主內容區塊 */
+        .main-content {
+        margin-left: 200px;
+        padding: 20px;
+        transition: margin-left 0.3s;
+        width: 100%;
+        }
+
+        .sidebar.collapsed ~ .main-content {
+        margin-left: 50px;
+        }
+
+        .TopLine {
+            width: 100%;
+            height: 50px;
+            background-color: #1c2835;
+            position: fixed;
+        }
+    </style>
+    </head>
+    <body>
+
+        <!-- 切換按鈕，浮在最上層 -->
+        <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+
+        <div class="TopLine">
+            <div class="sidebar" id="sidebar">
+                <h2>功能選單</h2>
+                <a href="#">首頁</a>
+                <a href="#">商品</a>
+                <a href="#">關於我們</a>
+            </div>
+        </div>
+
+        <!-- 主內容 -->
+        <div class="main-content">
+            <h1>主內容區</h1>
+            <p>這是網站的主要內容區域。</p>
+            <p>左側的選單可以展開或收合，只留下一顆按鈕。</p>
+        </div>
+
+        <script>
+            function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+            }
+        </script>
+    </body>
+</html>
