@@ -13,11 +13,11 @@
                     this.Polygon = new google.maps.Polygon({
                         paths: this.paths,
                         map: this.map, 
-                        strokeColor: "#008000",
-                        strokeOpacity: 0.8,
+                        strokeColor: "#000000",
+                        strokeOpacity: 1,
                         strokeWeight: 2,
                         fillColor: "#008000",
-                        fillOpacity: 0.35,
+                        fillOpacity: 1,
                         ...options
                     });
                     if (typeof onclick === 'function') {
@@ -64,6 +64,12 @@
                 rectanglePolygon.addListener('click', function() {
                     alert('你點到了這個四角區域！');
                 });
+                rectanglePolygon.addListener('mouseover', function(){
+                    this.setOptions({
+                        fillColor: "#FF0000",
+                        fillOpacity: 0.5
+                    });
+                })                
             }
         </script>
         <style>
