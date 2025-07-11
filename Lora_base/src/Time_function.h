@@ -7,6 +7,13 @@ const uint8_t daylightOffset = 0;   // 夏令時間
 const u_int mode_range = 3;
 u_int mode = 0;
 
+struct TimeData {                  // 結構體用於存儲時間數據
+    int hour;
+    int minute;
+    int year;
+    int mon;
+    int day;
+};
 
 void Time_init() {
     configTime(gmtOffest, daylightOffset, ntpServer);
@@ -20,7 +27,7 @@ void Time_init() {
         retry++;
         delay(1000);
     }
-    
+
     if (retry >= max_retries) {
         Serial.println("時間同步失敗。");
     }
@@ -29,7 +36,7 @@ void Time_init() {
     }
 }
 
-void getCurrentTime(struct TimeData *ntime) {
+void getCurrentTime(TimeData *ntime) {
     struct tm timeinfo;
     while (!getLocalTime(&timeinfo)) {
         Serial.println("獲取時間失敗，重試...");

@@ -5,6 +5,24 @@
 #include <Data_Base.h>
 #include <vector>
 
+struct one_to_one {
+    byte Addh = 0x00;    		   //設定ADDH的預設值
+    byte Addl = 0x01;  			   //設定ADDL的預設值 
+    int Chan = 23;  			   //設定CHAN的預設值
+    String message;                //訊息
+};
+
+struct one_to_Free {
+    byte Addh = 0xFF;    		   //設定ADDH的預設值
+    byte Addl = 0xFF;  			   //設定ADDL的預設值 
+    int Chan = 23;  			   //設定CHAN的預設值
+    String message;                //訊息
+};
+
+struct get_data {
+    String stringData;
+};
+
 class Config {
 	private:
 		Configuration conf;
@@ -212,7 +230,7 @@ void Lora_function::Lora_ConfigRest() {
 	conf.Config_structSet(e220_obj);  //設定結構體
 }
 
-void Lora_function::Lora_SendMessaege(struct one_to_one &obj) {  //發送訊息
+void Lora_function::Lora_SendMessaege(one_to_one &obj) {  //發送訊息
 	ResponseStatus re = e220_obj.sendFixedMessage(obj.Addh, obj.Addl, obj.Chan, obj.message);  //發送固定訊息
 	Serial.println(re.getResponseDescription());  //印出回應描述
 	Serial.println(re.code);  //印出回應代碼
@@ -223,7 +241,7 @@ void Lora_function::Lora_SendMessaege(struct one_to_one &obj) {  //發送訊息
 	}
 }
 
-void Lora_function::Lora_SendMessaege(struct one_to_Free &obj) {  //發送訊息
+void Lora_function::Lora_SendMessaege(one_to_Free &obj) {  //發送訊息
 	ResponseStatus re = e220_obj.sendFixedMessage(obj.Addh, obj.Addl, obj.Chan, obj.message);  //發送固定訊息
 	Serial.println(re.getResponseDescription());  //印出回應描述
 	Serial.println(re.code);  //印出回應代碼
@@ -234,7 +252,7 @@ void Lora_function::Lora_SendMessaege(struct one_to_Free &obj) {  //發送訊息
 	}
 }
 
-void Lora_function::Lora_GetMessage(struct get_data *obj) {
+void Lora_function::Lora_GetMessage(get_data *obj) {
 	if (e220_obj.available()>1) {
 		ResponseContainer r = e220_obj.receiveMessageRSSI();  //接收訊息
 		if (r.status.code != 1) {
