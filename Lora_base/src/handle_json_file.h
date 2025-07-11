@@ -102,7 +102,7 @@ void JsonFileHandle::GetServerJsonToFile(const char *filename, const char *url) 
         _error = deserializeJson(_doc, payload);  // 解析JSON資料
         if (_error) {
             Serial.println("deserializeJson() failed");  // JSON解析失敗
-            Serial.printf("Error Code: %d\n", httpCode);
+            Serial.printf("Error Code: %d\n", httpCode);    
             return;
         }
         File file = SPIFFS.open(filename, "w");

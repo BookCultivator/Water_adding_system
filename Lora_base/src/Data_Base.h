@@ -18,3 +18,11 @@ struct one_to_Free {
     int Chan = 23;  			   //設定CHAN的預設值
     String message;                //訊息
 };
+
+struct TimeData {                  // 結構體用於存儲時間數據
+    int hour;
+    int minute;
+    int year;
+    int mon;
+    int day;
+};

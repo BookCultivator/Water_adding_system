@@ -2,7 +2,7 @@
 #include <ArduinoJson.h>
 #include <String.h>
 #include <LoRa_E220.h>
-#include <Date_Base.h>
+#include <Data_Base.h>
 #include <vector>
 
 class Config {
@@ -49,10 +49,10 @@ void Config::Lora_getConfig(struct LoRa_E220 &obj) {
 }
 
 void Config::Config_structReset(struct LoRa_E220 &obj) {  //重設結構體
-	c = obj.getConfiguration();  //取得設定
-	conf = *(Configuration *)c.data;  //取得設定資料
-	Serial.println(c.status.getResponseDescription());  //印出回應描述
-	Serial.println(c.status.code);  //印出回應代碼
+	ResponseStructContainer locale_c = obj.getConfiguration();  //取得設定
+	conf = *(Configuration *)locale_c.data;  //取得設定資料
+	Serial.println(locale_c.status.getResponseDescription());  //印出回應描述
+	Serial.println(locale_c.status.code);  //印出回應代碼
 }
 
 void Config::Config_structSet(struct LoRa_E220 &obj) {  //設定結構體
@@ -217,6 +217,10 @@ void Lora_function::Lora_SendMessaege(struct one_to_one &obj) {  //發送訊息
 	Serial.println(re.getResponseDescription());  //印出回應描述
 	Serial.println(re.code);  //印出回應代碼
 	Serial.println("Send message done.");  //印出發送完成
+	if (!re.code) {
+		Serial.println("Send message failed.");
+		return;  //如果發送失敗，則返回
+	}
 }
 
 void Lora_function::Lora_SendMessaege(struct one_to_Free &obj) {  //發送訊息
@@ -224,6 +228,10 @@ void Lora_function::Lora_SendMessaege(struct one_to_Free &obj) {  //發送訊息
 	Serial.println(re.getResponseDescription());  //印出回應描述
 	Serial.println(re.code);  //印出回應代碼
 	Serial.println("Send message done.");  //印出發送完成
+	if (!re.code) {
+		Serial.println("Send message failed.");
+		return;  //如果發送失敗，則返回
+	}
 }
 
 void Lora_function::Lora_GetMessage(struct get_data *obj) {
