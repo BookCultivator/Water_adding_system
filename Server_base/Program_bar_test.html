@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>動態百分比顯示圖</title>
+  <style>
+    .progress-container {
+      width: 80%;
+      background-color: #eee;
+      border-radius: 20px;
+      overflow: hidden;
+      margin: 20px auto;
+      height: 30px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background-color: #3498db;
+      text-align: center;
+      line-height: 30px;
+      color: white;
+      transition: width 0.5s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 style="text-align:center;">進度百分比顯示</h2>
+
+  <div class="progress-container">
+    <div class="progress-bar" id="progress-bar">0%</div>
+  </div>
+
+  <button onclick="updateProgress()">增加進度</button>
+
+  <script>
+    let progress = 0;
+    function updateProgress() {
+      if (progress < 100) {
+        progress += 10;  // 每次 +10%
+        let bar = document.getElementById("progress-bar");
+        bar.style.width = progress + "%";
+        bar.innerText = progress + "%";
+      }
+    }
+  </script>
+
+</body>
+</html>

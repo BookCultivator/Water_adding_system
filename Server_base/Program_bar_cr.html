@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>圓形百分比圖</title>
+  <style>
+    .circle-container {
+      width: 150px;
+      height: 150px;
+      position: relative;
+      margin: 30px auto;
+    }
+
+    .circle {
+      transform: rotate(-90deg);
+    }
+
+    .circle-bg {
+      fill: none;
+      stroke: #eee;
+      stroke-width: 10;
+    }
+
+    .circle-progress {
+      fill: none;
+      stroke: #3498db;
+      stroke-width: 10;
+      stroke-linecap: round;
+      stroke-dasharray: 440;
+      stroke-dashoffset: 440;
+      transition: stroke-dashoffset 0.5s;
+    }
+
+    .circle-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="circle-container">
+    <svg width="150" height="150">
+      <circle class="circle-bg" cx="75" cy="75" r="70"></circle>
+      <circle class="circle-progress" id="circle-progress" cx="75" cy="75" r="70"></circle>
+    </svg>
+    <div class="circle-text" id="circle-text">0%</div>
+  </div>
+
+  <button onclick="updateCircle()">增加進度</button>
+
+  <script>
+    let progress = 0;
+    function updateCircle() {
+      if (progress < 100) {
+        progress += 10;
+        let circle = document.getElementById("circle-progress");
+        let text = document.getElementById("circle-text");
+
+        // 圓周長 = 2πr ≈ 440
+        let offset = 440 - (440 * progress) / 100;
+        circle.style.strokeDashoffset = offset;
+        text.innerText = progress + "%";
+      }
+    }
+  </script>
+
+</body>
+</html>
